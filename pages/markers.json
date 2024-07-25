@@ -1,0 +1,58 @@
+[
+    {
+        "lat": 30.427952509147605,
+        "lon": 68.37547408915836,
+        "icon_url": "https://img.icons8.com/?size=100&id=13183&format=png&color=000000",
+        "icon_name": "School",
+        "popup_text": "Your info here"
+    },
+    {
+        "lat": 30.405154565548617,
+        "lon": 68.41633012527413,
+        "icon_url": "https://img.icons8.com/?size=100&id=13269&format=png&color=000000",
+        "icon_name": "Water Valve",
+        "popup_text": "Your info here"
+    },
+    {
+        "lat": 30.38531306165692,
+        "lon": 68.43898977555683,
+        "icon_url": "https://img.icons8.com/?size=100&id=13183&format=png&color=000000",
+        "icon_name": "School",
+        "popup_text": "Your info here"
+    },
+    {
+        "lat": 30.38945938063758,
+        "lon": 68.41839009348168,
+        "icon_url": "https://img.icons8.com/?size=100&id=13269&format=png&color=000000",
+        "icon_name": "Water Valve",
+        "popup_text": "Your info here"
+    },
+    {
+        "lat": 30.393902633375077,
+        "lon": 68.42971929814307,
+        "icon_url": "https://img.icons8.com/?size=100&id=BE8zKVHfRaQj&format=png&color=000000",
+        "icon_name": "Location",
+        "popup_text": "Representative: fdsfsdfsdf<br>Description: strtrtwrtwt"
+    },
+    {
+        "lat": 30.417294393220043,
+        "lon": 68.37066749667413,
+        "icon_url": "https://img.icons8.com/?size=100&id=BE8zKVHfRaQj&format=png&color=000000",
+        "icon_name": "Location",
+        "popup_text": "Representative: wererwerwerwer<br>Description: strtrtwrtwt"
+    },
+    {
+        "lat": 30.39797483627988,
+        "lon": 68.34646250586884,
+        "icon_url": "https://img.icons8.com/?size=100&id=13183&format=png&color=000000",
+        "icon_name": "School",
+        "popup_text": "Your info here"
+    },
+    {
+        "lat": 30.39569859701312,
+        "lon": 68.34556111102762,
+        "icon_url": "https://img.icons8.com/?size=100&id=BE8zKVHfRaQj&format=png&color=000000",
+        "icon_name": "Location",
+        "popup_text": "Representative: a, b<br>Description: sdfererwer"
+    }
+]
