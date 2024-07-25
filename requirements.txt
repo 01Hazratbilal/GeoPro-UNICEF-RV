@@ -1,3 +1,4 @@
 streamlit-extras
 folium
 streamlit_folium
+geopy
