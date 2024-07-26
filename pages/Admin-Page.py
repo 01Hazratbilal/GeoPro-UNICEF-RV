@@ -22,7 +22,6 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
-
 # Initialize geocoder
 geolocator = Nominatim(user_agent="geoapiExercises")
 
@@ -46,24 +45,33 @@ def get_place_name(lat, lon):
 def add_custom_marker(map_object, lat, lon, icon_url, icon_name, popup_text):
     icon = folium.CustomIcon(icon_url, icon_size=(30, 30)) if icon_url else None
     place_name = get_place_name(lat, lon)
-    full_popup_text = f"<b>{icon_name}</b><br>{popup_text}<br>{place_name}<br>Cordinates: {lat}, {lon}"
+    full_popup_text = f"{popup_text}<br>Place: {place_name}<br>Latitude: {lat}<br>Longitude: {lon}<br><b>{icon_name}</b><br>"
     popup = folium.Popup(folium.IFrame(full_popup_text, width=200, height=150))
     folium.Marker(location=[lat, lon], popup=popup, icon=icon).add_to(map_object)
 
+def ensure_files_exist():
+    for filename in ['shapes.json', 'markers.json']:
+        if not os.path.exists(filename):
+            with open(filename, 'w') as f:
+                json.dump({"type": "FeatureCollection", "features": []} if filename == 'shapes.json' else [], f)
+
 @st.cache_resource
-def load_data(filename, default=None):
-    if os.path.exists(filename):
-        with open(filename, 'r') as f:
-            return json.load(f)
-    return default or {"type": "FeatureCollection", "features": []}
+def load_data(filename):
+    ensure_files_exist()
+    with open(filename, 'r') as f:
+        return json.load(f)
 
 def save_data(data, filename):
     with open(filename, 'w') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
+# Ensure required files exist
+ensure_files_exist()
+
 # Load previously saved markers and shapes
-markers = load_data('markers.json', [])
+markers = load_data('markers.json')
 shapes = load_data('shapes.json')
+
 
 map_center = [30.391638, 68.434838]  # Coordinates for Loralai, Balochistan, Pakistan
 zoom_start = 12
@@ -83,7 +91,7 @@ folium.TileLayer(
 # Sidebar sections
 with st.sidebar.expander("Customize Drawing", expanded=False):
     # Color picker for polygons
-    polygon_color = st.color_picker("Select Jam color", "#FF0000")
+    polygon_color = st.color_picker("Select polygon color", "#FF0000")
 
 draw = Draw(
     draw_options={
@@ -103,7 +111,7 @@ draw.add_to(map_object)
 
 # Horizontal Navbar for filtering
 with st.container():
-    filter_options = ['Jam', 'Pipe Line'] + list(ICON_URLS.keys())
+    filter_options = ['Polygon', 'LineString'] + list(ICON_URLS.keys())
     selected_options = st.multiselect("", filter_options, default=filter_options)
 
 # Filter markers and shapes
@@ -150,7 +158,7 @@ for shape in shapes['features']:
         shape_color = shape['properties'].get('color', '#FF0000')
         geometry = shape['geometry']
 
-        if geometry['type'] == 'Jam':
+        if geometry['type'] == 'Polygon':
             polygon_coords = geometry['coordinates'][0]
             icon_counts, location_details = count_markers_in_polygon(polygon_coords, markers)
 
@@ -168,7 +176,7 @@ for shape in shapes['features']:
                 style_function=lambda feature: {'color': shape_color, 'weight': 2, 'fillOpacity': 0.05, 'opacity': 0.3},
                 popup=folium.Popup(folium.IFrame(popup_text, width=200, height=150)) if popup_text else None
             ).add_to(map_object)
-        elif geometry['type'] == 'Pipe Line':
+        elif geometry['type'] == 'LineString':
             popup_text = shape.get('properties', {}).get('description', '')
             folium.GeoJson(
                 shape,
@@ -177,7 +185,7 @@ for shape in shapes['features']:
             ).add_to(map_object)
 
 # Render map
-map_data = st_folium(map_object, width=910, height=500)
+map_data = st_folium(map_object, width=750, height=500)
 
 if map_data and 'last_clicked' in map_data and map_data['last_clicked']:
     st.session_state.latitude = map_data['last_clicked']['lat']
@@ -202,11 +210,11 @@ with st.sidebar.expander("Add a Marker", expanded=False):
     icon_url = ICON_URLS[icon_name]
 
     if icon_name == "Location":
-        representative = st.text_input("Representative", placeholder="Representative name")
-        description = st.text_area("Description", placeholder="Write something here...")
-        popup_text = f"Representative: {representative}<br> {description}"
+        representative = st.text_input("Representative")
+        description = st.text_area("Description")
+        popup_text = f"Representative: {representative}<br>Description: {description}"
     else:
-        popup_text = st.text_area("Popup Text", placeholder="Your info here...")
+        popup_text = st.text_area("Popup Text", "Your info here")
 
     add_marker_button = st.button("Add Marker")
 
@@ -241,7 +249,6 @@ with st.sidebar.expander("Delete a Shape", expanded=False):
             st.experimental_rerun()
     else:
         st.write("No shapes available to delete.")
-
 
 
 
