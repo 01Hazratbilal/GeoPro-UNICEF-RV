@@ -71,6 +71,9 @@ folium.TileLayer(
     name='Google Satellite'
 ).add_to(map_object)
 
+# Add Fullscreen plugin to map_object with position set to 'topright'
+Fullscreen(position='topright').add_to(map_object)
+
 # Add fullscreen button to the map
 Fullscreen(position='topright').add_to(map_object)
 
