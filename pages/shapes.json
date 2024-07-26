@@ -1,35 +1,4 @@
 {
     "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "properties": {
-                "color": "#FF0000"
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            68.339596,
-                            30.405896
-                        ],
-                        [
-                            68.327065,
-                            30.381316
-                        ],
-                        [
-                            68.383714,
-                            30.38487
-                        ],
-                        [
-                            68.339596,
-                            30.405896
-                        ]
-                    ]
-                ]
-            },
-            "id": "21bd0665-524f-4976-900d-e2efdd074267"
-        }
-    ]
+    "features": []
 }
