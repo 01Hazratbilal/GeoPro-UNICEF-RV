@@ -33,15 +33,27 @@ def load_config():
 config = load_config()
 ICON_URLS = config["ICON_URLS"]
 
+def ensure_files_exist():
+    for filename in ['shapes.json', 'markers.json']:
+        if not os.path.exists(filename):
+            with open(filename, 'w') as f:
+                json.dump({"type": "FeatureCollection", "features": []} if filename == 'shapes.json' else [], f)
+
 @st.cache_resource
-def load_data(filename, default=None):
-    if os.path.exists(filename):
-        with open(filename, 'r') as f:
-            return json.load(f)
-    return default or {"type": "FeatureCollection", "features": []}
+def load_data(filename):
+    ensure_files_exist()
+    with open(filename, 'r') as f:
+        return json.load(f)
+
+def save_data(data, filename):
+    with open(filename, 'w') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+# Ensure required files exist
+ensure_files_exist()
 
 # Load previously saved markers and shapes
-markers = load_data('markers.json', [])
+markers = load_data('markers.json')
 shapes = load_data('shapes.json')
 
 map_center = [30.391638, 68.434838]  # Coordinates for Loralai, Balochistan, Pakistan
