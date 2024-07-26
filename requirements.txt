@@ -3,4 +3,3 @@ folium
 streamlit_folium
 geopy
 shapely
-Fullscreen
