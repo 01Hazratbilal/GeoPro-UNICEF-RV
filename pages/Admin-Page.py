@@ -223,7 +223,7 @@ with st.sidebar.expander("Add a Marker", expanded=False):
         new_marker = {"lat": latitude, "lon": longitude, "icon_url": icon_url, "icon_name": icon_name, "popup_text": popup_text}
         markers.append(new_marker)
         save_data(markers, 'markers.json')
-        st.experimental_rerun()
+        st.rerun()
 
 with st.sidebar.expander("Delete a Marker", expanded=False):
     if markers:
