@@ -108,7 +108,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 # Display Text
 st.markdown('<div class = "welcome-text">WELCOME</div>', unsafe_allow_html=True)
 st.markdown('<div class = "random-statement">To Geo Pro</div>', unsafe_allow_html=True)
-st.markdown(f'<div class = "random-statement">UNICEF RV</div>', unsafe_allow_html=True)
+st.markdown(f'<div class = "random-statement">UNHCR RV</div>', unsafe_allow_html=True)
 
 
 # Create columns for buttons
