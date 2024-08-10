@@ -81,7 +81,7 @@ c1, c2, c3 = st.columns([0.2, 1, 0.2])
 with c2:
     # Horizontal Navbar for filtering
     with st.container():
-        filter_options = ['Polygon', 'LineString'] + list(ICON_URLS.keys())
+        filter_options = ['Jam', 'LineString'] + list(ICON_URLS.keys())
         selected_options = st.multiselect("", filter_options, default=filter_options)
 
 # Function to add a custom marker
@@ -116,16 +116,16 @@ for marker in markers:
             marker["popup_text"]
         )
 
-def count_markers_in_polygon(polygon_coords, markers):
-    from shapely.geometry import Polygon, Point
+def count_markers_in_Jam(Jam_coords, markers):
+    from shapely.geometry import Jam, Point
 
-    polygon = Polygon(polygon_coords)
+    Jam = Jam(Jam_coords)
     icon_counts = {icon: 0 for icon in ICON_URLS.keys()}
     location_details = []
 
     for marker in markers:
         point = Point(marker["lon"], marker["lat"])
-        if polygon.contains(point):
+        if Jam.contains(point):
             if marker["icon_name"] == "Location":
                 location_details.append(marker["popup_text"])
             else:
@@ -142,9 +142,9 @@ for shape in shapes['features']:
         shape_color = shape['properties'].get('color', '#FF0000')
         geometry = shape['geometry']
 
-        if geometry['type'] == 'Polygon':
-            polygon_coords = geometry['coordinates'][0]
-            icon_counts, location_details = count_markers_in_polygon(polygon_coords, markers)
+        if geometry['type'] == 'Jam':
+            Jam_coords = geometry['coordinates'][0]
+            icon_counts, location_details = count_markers_in_Jam(Jam_coords, markers)
 
             # Construct the popup text
             popup_text = ""
