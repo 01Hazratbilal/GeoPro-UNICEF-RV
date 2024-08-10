@@ -6,7 +6,7 @@ from geopy.geocoders import Nominatim
 import json
 import os
 import uuid
-from shapely.geometry import polygon, Point
+from shapely.geometry import Polygon, Point
 from streamlit_extras.switch_page_button import switch_page
 
 st.set_page_config(layout="wide")
@@ -90,13 +90,13 @@ folium.TileLayer(
 
 # Sidebar sections
 with st.sidebar.expander("Customize Drawing", expanded=False):
-    # Color picker for Jams
-    Jam_color = st.color_picker("Select Jam color", "#FF0000")
+    # Color picker for polygons
+    polygon_color = st.color_picker("Select polygon color", "#FF0000")
 
 draw = Draw(
     draw_options={
         'polyline': {'shapeOptions': {'color': '#0000FF', 'weight': 3, 'fillOpacity': 0.5}},  # Set polyline color to blue
-        'Jam': {'shapeOptions': {'color': Jam_color, 'weight': 1, 'fillOpacity': 0.05}},  # Use selected Jam color
+        'polygon': {'shapeOptions': {'color': polygon_color, 'weight': 1, 'fillOpacity': 0.05}},  # Use selected polygon color
         'circle': False,
         'rectangle': False,
         'circlemarker': False,
@@ -111,7 +111,7 @@ draw.add_to(map_object)
 
 # Horizontal Navbar for filtering
 with st.container():
-    filter_options = ['Jam', 'LineString'] + list(ICON_URLS.keys())
+    filter_options = ['Polygon', 'LineString'] + list(ICON_URLS.keys())
     selected_options = st.multiselect("", filter_options, default=filter_options)
 
 # Filter markers and shapes
@@ -134,14 +134,14 @@ for marker in markers:
             marker["popup_text"]
         )
 
-def count_markers_in_Jam(Jam_coords, markers):
-    Jam = Jam(Jam_coords)
+def count_markers_in_polygon(polygon_coords, markers):
+    polygon = Polygon(polygon_coords)
     icon_counts = {icon: 0 for icon in ICON_URLS.keys()}
     location_details = []
 
     for marker in markers:
         point = Point(marker["lon"], marker["lat"])
-        if Jam.contains(point):
+        if polygon.contains(point):
             if marker["icon_name"] == "Location":
                 location_details.append(marker["popup_text"])
             else:
@@ -158,9 +158,9 @@ for shape in shapes['features']:
         shape_color = shape['properties'].get('color', '#FF0000')
         geometry = shape['geometry']
 
-        if geometry['type'] == 'Jam':
-            Jam_coords = geometry['coordinates'][0]
-            icon_counts, location_details = count_markers_in_Jam(Jam_coords, markers)
+        if geometry['type'] == 'Polygon':
+            polygon_coords = geometry['coordinates'][0]
+            icon_counts, location_details = count_markers_in_polygon(polygon_coords, markers)
 
             # Construct the popup text
             popup_text = ""
@@ -197,7 +197,7 @@ if map_data and 'all_drawings' in map_data:
         for shape in new_shapes:
             shape['id'] = str(uuid.uuid4())
             shape['properties'] = shape.get('properties', {})
-            shape_color = shape.get('properties', {}).get('color', Jam_color)
+            shape_color = shape.get('properties', {}).get('color', polygon_color)
             shape['properties']['color'] = shape_color
         shapes['features'].extend(new_shapes)
         save_data(shapes, 'shapes.json')
@@ -257,3 +257,4 @@ col1, col2, col3 = st.columns([2.3, 1, 2])
 with col2:
     if st.button("Back"):
         switch_page('Main-Page')
+    
