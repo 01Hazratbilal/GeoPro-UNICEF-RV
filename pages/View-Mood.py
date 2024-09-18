@@ -67,7 +67,7 @@ with c2:
         selected_options = st.multiselect("", filter_options, default=filter_options)
 
 # Function to add a custom marker
-	def should_display_shape(shape):
+def should_display_shape(shape):
             marker["popup_text"]
         )
 
