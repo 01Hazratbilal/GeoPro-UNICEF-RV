@@ -116,7 +116,7 @@ for marker in markers:
             marker["popup_text"]
         )
 
-def count_markers_in_Jam(Jam_coords, markers):
+def count_markers_in_Jam(Ploygon_coords, markers):
     from shapely.geometry import Jam, Point
 
     Jam = Jam(Jam_coords)
