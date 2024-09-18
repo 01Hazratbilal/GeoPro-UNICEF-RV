@@ -81,7 +81,7 @@ c1, c2, c3 = st.columns([0.2, 1, 0.2])
 with c2:
     # Horizontal Navbar for filtering
     with st.container():
-        filter_options = ['polygon', 'LineString'] + list(ICON_URLS.keys())
+        filter_options = ['Polygon', 'LineString'] + list(ICON_URLS.keys())
         selected_options = st.multiselect("", filter_options, default=filter_options)
 
 # Function to add a custom marker
