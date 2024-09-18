@@ -67,7 +67,7 @@ with c2:
         selected_options = st.multiselect("", filter_options, default=filter_options)
 
 # Function to add a custom marker
-	@@ -116,16 +116,16 @@ def should_display_shape(shape):
+	def should_display_shape(shape):
             marker["popup_text"]
         )
 
@@ -84,7 +84,7 @@ def count_markers_in_polygon(polygon_coords, markers):
             if marker["icon_name"] == "Location":
                 location_details.append(marker["popup_text"])
             else:
-	@@ -142,9 +142,9 @@ def count_markers_in_polygon(polygon_coords, markers):
+	def count_markers_in_polygon(polygon_coords, markers):
         shape_color = shape['properties'].get('color', '#FF0000')
         geometry = shape['geometry']
 
